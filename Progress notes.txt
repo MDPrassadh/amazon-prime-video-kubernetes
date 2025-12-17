@@ -2,9 +2,9 @@ progress note
 
 Soanrqube
 
-1. Sonarqube token - xxxxxxxxxxxxxxxxxxxxx
+1. Sonarqube token - squ_abc5660d7e6d60259b55b476ae01800fa55e7c13
 
-2. Sonarqube Webhoook - jenkins	http://13.216.214.1:8080/sonarqube-webhook/
+2. Sonarqube Webhoook - jenkins	http://http://13.127.197.222:8080/sonarqube-webhook/
 
 3. GMAIL passtoken - xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
@@ -111,4 +111,5 @@ AWS Service Integrations – The following flags enable integrations with AWS se
 --appmesh-access → Enables Amazon App Mesh for microservice networking.
 
 --alb-ingress-access → Allows Kubernetes Ingress Controller to manage AWS ALB (Application Load Balancer).
+
 
