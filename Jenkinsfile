@@ -8,17 +8,17 @@ pipeline{
         SCANNER_HOME=tool 'sonar-scanner'
     }
     stages {
-        stage('clean workspace'){
+        stage('CLEAN WORKSPACE'){
             steps{
                 cleanWs()
             }
         }
-        stage('Checkout from Git'){
+        stage('1-CHECK OUT FROM GIT'){
             steps{
-                git branch: 'main', url: 'https://github.com/Aseemakram19/amazon-prime-video-kubernetes.git'
+                git branch: 'main', url: 'https://github.com/MDPrassadh/amazon-prime-video-kubernetes.git'
             }
         }
-        stage("Sonarqube Analysis "){
+        stage("SONARQUBE ANALYSIS"){
             steps{
                 withSonarQubeEnv('SonarQube') {
                     sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=amazon-prime-video \
@@ -26,14 +26,14 @@ pipeline{
                 }
             }
         }
-        stage("quality gate"){
+        stage("QUALITY GATES"){
            steps {
                 script {
                     waitForQualityGate abortPipeline: false, credentialsId: 'Sonar-token' 
                 }
             } 
         }
-        stage('Install Dependencies') {
+        stage('INSTALL DEPENDENCIES') {
             steps {
                 sh "npm install"
             }
@@ -43,7 +43,7 @@ pipeline{
                 sh "trivy fs . > trivyfs.txt"
             }
         }
-        stage("Docker Build & Push"){
+        stage("DOCKER BUILD & PUSH"){
             steps{
                 script{
                    withDockerRegistry(credentialsId: 'docker', toolName: 'docker'){   
@@ -54,7 +54,7 @@ pipeline{
                 }
             }
         }
-		stage('Docker Scout Image') {
+		stage('DOCKER SCOUT IMAGE') {
             steps {
                 script{
                    withDockerRegistry(credentialsId: 'docker', toolName: 'docker'){
@@ -66,12 +66,12 @@ pipeline{
             }
         }
 
-        stage("TRIVY-docker-images"){
+        stage("TRIVY-DOCKER-IMAGES"){
             steps{
                 sh "trivy image aseemakram19/amazon-prime-video:latest > trivyimage.txt" 
             }
         }
-        stage('App Deploy to Docker container'){
+        stage('APP DEPLOY TO DOCKER CONTAINER'){
             steps{
                 sh 'docker run -d --name amazon-prime-video -p 3000:3000 aseemakram19/amazon-prime-video:latest'
             }
