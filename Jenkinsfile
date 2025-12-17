@@ -20,7 +20,7 @@ pipeline{
         }
         stage("SONARQUBE ANALYSIS"){
             steps{
-                withSonarQubeEnv('SonarQube') {
+                withSonarQubeEnv('SonarQube'){
                     sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=amazon-prime-video \
                     -Dsonar.projectKey=amazon-prime-video '''
                 }
@@ -33,12 +33,12 @@ pipeline{
                 }
             } 
         }
-        stage('INSTALL DEPENDENCIES') {
+        stage('INSTALL DEPENDENCIES'){
             steps {
                 sh "npm install"
             }
         }        
-        stage('TRIVY FS SCAN') {
+        stage('TRIVY FS SCAN'){
             steps {
                 sh "trivy fs . > trivyfs.txt"
             }
@@ -54,7 +54,7 @@ pipeline{
                 }
             }
         }
-		stage('DOCKER SCOUT IMAGE') {
+		stage('DOCKER SCOUT IMAGE'){
             steps {
                 script{
                    withDockerRegistry(credentialsId: 'docker', toolName: 'docker'){
